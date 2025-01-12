@@ -22,7 +22,7 @@ Technical Note TN003: Communications Guide
 */
 
 #include <Arduino.h>
-#include <Wire.h> // Arduino library for I2C
+#include <Wire.h> // Arduino library for I2C - see https://docs.arduino.cc/language-reference/en/functions/communication/wire/
 #include "lee_ventus_spm_i2c.h"
 
 
