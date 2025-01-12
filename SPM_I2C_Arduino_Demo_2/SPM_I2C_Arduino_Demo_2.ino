@@ -23,7 +23,6 @@ void setup() {
 
   lcd.begin(16, 2);
 
-  //lcd.print("Hello pump!");
 }
 
 void loop() {
