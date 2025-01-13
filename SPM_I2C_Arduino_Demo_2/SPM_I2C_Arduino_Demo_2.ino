@@ -15,9 +15,8 @@ void setup() {
 
   Wire.begin(); // join i2c bus (address optional for master)
 
+  
   pinMode(3, OUTPUT);
-  //pinMode(4, OUTPUT);
-  //pinMode(5, OUTPUT);
 
   pinMode(2, INPUT);
 
@@ -60,6 +59,7 @@ void loop() {
     //cycle through different power levels  
     for (int target_power = 100; target_power <= 900; target_power += 100)
     {
+      // Set pump target pump via I2C interface
       spm_i2c_write_float(SPM_DEFAULT_I2C_ADDRESS, REGISTER_SET_VAL, target_power);
       delay(100);
 
@@ -67,7 +67,7 @@ void loop() {
       Serial.print(target_power);
       Serial.print("mW");
 
-      // LCD print target power
+      // Write arget pump power to LCD
       lcd.clear();
       lcd.setCursor(0, 0);
       target_power_display = "Trgt Pwr= " + String(target_power) + " mW"; // 2 decimal places
@@ -77,9 +77,7 @@ void loop() {
 
       for(int j=0; j<4; j++)
       {
-        //float measured_power, measured_pressure;
-        //String measured_power_display, measured_pressure_display;
-
+        // Read actual power and pressure from pump via I2C interface
         measured_power = spm_i2c_read_float(SPM_DEFAULT_I2C_ADDRESS, REGISTER_MEAS_DRIVE_MILLIWATTS);
         measured_pressure = spm_i2c_read_float(SPM_DEFAULT_I2C_ADDRESS, REGISTER_MEAS_DIGITAL_PRESSURE);
 
@@ -90,6 +88,7 @@ void loop() {
         Serial.print(measured_pressure);
         Serial.print(" mbar");
 
+        // Write measured actual pump power and pressure to LCD
         measured_power_display = "Pwr = " + String(measured_power, 2) + " mW"; // 2 decimal places
         lcd.setCursor(0, 0);
         lcd.print(measured_power_display);
