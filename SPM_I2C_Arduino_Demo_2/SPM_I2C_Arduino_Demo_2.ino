@@ -15,13 +15,13 @@ void setup() {
 
   Wire.begin(); // join i2c bus (address optional for master)
 
-  
-  pinMode(3, OUTPUT);
-
+  // Push button feeds this inout
   pinMode(2, INPUT);
 
-  lcd.begin(16, 2);
+  // LED that lights when button is pressed
+  pinMode(3, OUTPUT);
 
+  lcd.begin(16, 2);
 }
 
 void loop() {
@@ -51,6 +51,7 @@ void loop() {
 
     //set to manual power control
     spm_i2c_setup_manual_power_control(SPM_DEFAULT_I2C_ADDRESS);
+
     //and enable pump
     spm_i2c_write_int16(SPM_DEFAULT_I2C_ADDRESS, REGISTER_PUMP_ENABLE, 1);
 
@@ -67,7 +68,7 @@ void loop() {
       Serial.print(target_power);
       Serial.print("mW");
 
-      // Write arget pump power to LCD
+      // Write target pump power to LCD
       lcd.clear();
       lcd.setCursor(0, 0);
       target_power_display = "Trgt Pwr= " + String(target_power) + " mW"; // 2 decimal places
